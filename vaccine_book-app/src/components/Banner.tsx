@@ -10,8 +10,8 @@ export default function Banner() {
                     priority
                     objectFit="cover" />
             <div className={styles.bannerText}>
-                <h1>Vaccine Book App</h1>
-                <h3>Find out more information</h3>
+                <h1 className='text-4xl'>Vaccine Book App</h1>
+                <h3 className="text-xl">Find out more information</h3>
             </div>
         </div>
     );

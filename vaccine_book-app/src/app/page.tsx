@@ -9,7 +9,9 @@ export default function Home() {
       <Banner />
       <div style={{margin: "20px", display: 'flex', flexDirection: "row",
                   flexWrap: "wrap", justifyContent: 'space-around', alignContent: 'space-around'}}>
-        <ProductCard/>
+        <ProductCard carName='Chulalongkorn Hospital' imgSrc='/img/chula.jpg'/>
+        <ProductCard carName='Rajavithi Hospital' imgSrc='/img/rajavithi.jpg'/>
+        <ProductCard carName='Thammasat University Hospital' imgSrc='/img/thammasat.jpg'/>
       </div>
     </main>
   )
