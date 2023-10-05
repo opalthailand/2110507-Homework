@@ -1,11 +1,21 @@
 import Banner from "@/components/Banner";
-import CardPanel from "@/components/CardPanel";
+import PromoteCard from "@/components/PromoteCard";
 import styles from "./page.module.css";
 
 export default function Home() {
   return (
     <main className={styles.main}>
       <Banner />
+  
+      <div className="pt-6 pl-[40px] font-bold text-[40px]">
+        <span className="flex">
+          <span>Vaccination Process</span>
+          <span className="pl-4 pt-2">
+            </span>
+        </span>
+      </div>
+      <PromoteCard />
+
       <div className={`${styles.questionSpan}`}>
         <span className="flex">
           <span className="mr-4 pl-[20px] text-[40px]">ข้อมูลที่ควรรู้ก่อนมาฉีด Moderna</span>
