@@ -3,11 +3,14 @@ import { useState } from "react"
 import styles from "./banner.module.css"
 import Image from "next/image"
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function Banner() {
     const covers = ['/img/cover.jpg','/img/cover2.jpg','/img/cover3.jpg','/img/cover4.jpg']
     const [index,setIndex] = useState(0)
     const router = useRouter();
+    const {data: session} = useSession();
+    console.log(session?.user.token);
 
     return (
         <div className={styles.banner}>
@@ -23,6 +26,11 @@ export default function Banner() {
             className={styles.image}
           />
           <div className={styles.bannerText}>
+          <div className="absolute mt-[30px] pt-[50px] right-0 pr-[25px] text-[20px]">
+          {
+            session ? <span className="text-white font-bold">Greeting {session.user?.name} !</span> : ''
+          }
+        </div>
             <h4 className="flex pl-12">
               {" "}
             </h4>

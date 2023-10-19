@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export function VideoPlayer({vdoSrc, isPlaying} : {vdoSrc: string, isPlaying: boolean}) {
+export function VideoPlayer({videoPath, isPlaying} : {videoPath: string, isPlaying: boolean}) {
     const vdoRef = useRef<HTMLVideoElement>(null);
     useEffect(() => {
         if (isPlaying) {
@@ -11,15 +11,14 @@ export function VideoPlayer({vdoSrc, isPlaying} : {vdoSrc: string, isPlaying: bo
     }, [isPlaying]);
 
     return (
-        <div>
-          <video
-            className="w-[40%]"
-            src={vdoSrc}
+            <video 
+            src={videoPath}
             ref={vdoRef}
             controls
             loop
             muted
-          />
-        </div>
-      );
-    }
+            preload="metadata"
+            className="w-full border-4 rounded-lg border-black"
+            />
+    )
+}
