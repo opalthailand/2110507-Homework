@@ -1,5 +1,6 @@
 import Image from "next/image";
 import getHospital from "@/libs/getHospital";
+import Link from "next/link";
 
 export default async  function HospitalDetailPage({
   params,
@@ -31,6 +32,15 @@ export default async  function HospitalDetailPage({
             </div>
           </div>
         </div>
+      </div>
+      <div className="flex items-center mt-10 pt-10 justify-center text-[25px]">
+        <Link href={`/booking?id=${params.hid}&name=${hospitalDetail.data.name}`}>
+          <button className="bg-white text-cyan-600 border-2 border-cyan-600 border-opacity-100
+  font-semibold py-2 px-10 rounded-lg z-3
+  transform transition-colors duration-300 hover:bg-cyan-600 hover:text-white hover:border-transparent">
+            Booking
+          </button>
+        </Link>
       </div>
     </main>
   );

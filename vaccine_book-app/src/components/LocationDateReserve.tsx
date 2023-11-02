@@ -1,55 +1,90 @@
-'use client'
-import { DatePicker } from "@mui/x-date-pickers"
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
-import { Select, MenuItem, TextField,FormControl,Button} from "@mui/material"
-import Link from "next/link";
+"use client";
 
-export default function LocationDateReserve() {
-    const submitForm = () => {
-        alert("ส่งสำเร็จ");
-    }
-    return (
-      <div className="bg-slate-100 rounded-lg space-x-5 space-y-2 w-fit px-10 py-5 flex flex-row justify-center">
-        <FormControl variant="filled" className="flex justify-center space-y-[30px]" fullWidth>
-        <div className="flex space-x-5 text-black">
-          <p className="pt-[15px] font-semibold text-[15px]">ชื่อ</p>
-          <TextField type="text" variant="standard" label="first_name" />
-        </div>
-  
-        <div className="flex space-x-5 text-black">
-          <p className="pt-[15px] font-semibold text-[15px]">นามสกุล</p>
-          <TextField type="text" variant="standard" label="last_name" />
-        </div>
-  
-        <div className="flex space-x-5 text-black">
-          <label className="pt-[15px] font-semibold text-[15px]">รหัสประจำตัวประชาชน</label>
-          <TextField type="text" variant="standard" label="citizen_id" className="w-[300px]" />
-        </div>
-  
-        <div className="flex space-x-5 text-black">
-          <label className="pt-[15px] font-semibold text-[15px]">โรงพยาบาล</label>
-          <Select variant="standard" name="hospital" id="hospital" className="h-[2em] w-[200px]">
-            <MenuItem value="CU">Chulalongkorn Hospital</MenuItem>
-            <MenuItem value="RH">Rajavithi Hospital</MenuItem>
-            <MenuItem value="TH">Thammasat University Hospital</MenuItem>
-          </Select>
-        </div>
-  
-        <div className="flex space-x-5 text-black">
-          <label className="pt-[15px] font-semibold text-[15px]">วันที่ต้องการรับวัคซีน</label>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker className="bg-white" />
-          </LocalizationProvider>
-        </div>
+import { setBookingItem } from "@/redux/features/bookSlice";
+import { AppDispatch } from "@/redux/store";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs, { Dayjs } from "dayjs";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 
-        <Link href="/" className="block w-full">
-            <Button variant="contained" color="success" className="bg-blue-600 h-[50px] w-full" onClick={submitForm}>
-                <span className="text-lg font-bold text-[15px]">Submit</span>
-            </Button>
-        </Link>
+export default function BookingForm() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [idCard, setIdCard] = useState("");
+  const [hospital, setHospital] = useState("");
+  const [date, setDate] = useState("");
 
-        </FormControl>
+  const dispatch = useDispatch<AppDispatch>();
+
+  const makeReservation = () => {
+    dispatch(setBookingItem({ firstName, lastName, idCard, hospital, date }));
+  };
+
+  return (
+    <div className="bg-green-100 opacity-80 w-[80%] py-10 rounded-2xl flex flex-col gap-y-6 items-center">
+      <div className="flex flex-row gap-8 items-center w-[80%]">
+        <TextField
+          label="First Name"
+          variant="outlined"
+          onChange={(e) => setFirstName(e.target.value)}
+        />
+        <TextField
+          label="Last Name"
+          variant="outlined"
+          onChange={(e) => setLastName(e.target.value)}
+        />
+        <TextField
+          label="Identity Card Number"
+          variant="outlined"
+          onChange={(e) => setIdCard(e.target.value)}
+        />
       </div>
-    );
-  }
+      <div className="flex flex-row gap-8 items-center w-[80%]">
+        <FormControl>
+          <InputLabel id="hospital-label">Hospital To Book</InputLabel>
+          <Select
+            labelId="hospital-label"
+            label="Hospital To Book"
+            variant="outlined"
+            className="w-[280px]"
+            defaultValue=""
+            onChange={(e) => setHospital(e.target.value as string)}
+          >
+            <MenuItem value="Chulalongkorn Hospital">
+              Chulalongkorn Hospital
+            </MenuItem>
+            <MenuItem value="Thammasat University Hospital">
+              Thammasat University Hospital
+            </MenuItem>
+            <MenuItem value="Rajavithi Hospital">Rajavithi Hospital</MenuItem>
+          </Select>
+        </FormControl>
+        <div className="text-slate-950 text-lg">Reservation Date</div>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+            className="w-[320px]"
+            onChange={(value) => {
+              setDate(dayjs(value as Dayjs).format("DD/MM/YYYY"));
+            }}
+          />
+        </LocalizationProvider>
+      </div>
+      <div>
+        <button
+          className="bg-sky-950 text-white rounded-lg px-6 py-2 hover:bg-white hover:text-sky-950"
+          onClick={makeReservation}
+        >
+          Book Now!
+        </button>
+      </div>
+    </div>
+  );
+}

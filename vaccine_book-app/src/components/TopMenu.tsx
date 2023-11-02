@@ -1,40 +1,34 @@
-import Image from 'next/image'
-import TopMenuItem from './TopMenuItem'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
-import { Link } from '@mui/material'
+import Image from "next/image";
+import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-export default async function TopMenu() {
+export default async function MenuBar() {
+  const session = await getServerSession(authOptions);
 
-    const session = await getServerSession(authOptions)
-
-    return (
-        <div className='flex justify-between'>
-            <div className='fixed top-0 z-[12] pt-5 w-full font-bold pl-2'>
-                {
-                    session ? <Link href="/api/auth/signout">
-                        <div className='flex items-center absolute h-full px-2 text-white text-md'>
-                            Sign-Out of {session.user?.name}
-                        </div>
-                    </Link>
-                        : <Link href="/api/auth/signin" >
-                            <div className='flex items-center absolute h-full px-2 text-white text-md'>
-                                Sign-In
-                            </div>
-                        </Link>
-                }
-            </div>
-            <div className='flex w-full fixed z-[11] justify-end
-        bg-gradient-to-l from-blue-950 from-10% via-indigo-600 
-        via-60% to-sky-400 to-95%'>
-                <TopMenuItem title='Booking' pageRef='/booking' />
-                <Image src={'/img/vaccine.png'}
-                    className='ml-10 w-[100px] h-[60px]'
-                    alt='logo'
-                    width={0}
-                    height={0}
-                    sizes='100vh' />
-            </div>
+  return (
+    <div className="h-[75px] w-full bg-blue-300 flex flex-row justify-end gap-6 items-center fixed top-0 left-0 z-10">
+      <Image
+        src="/img/logo.png"
+        alt="Logo"
+        className="h-[100%] w-auto object-cover"
+        width={0}
+        height={0}
+        sizes="100%"
+      />
+      <div
+        className="px-8 text-white font-bold tracking-widest 
+      text-2xl absolute z-[200] left-0 top-[20px] flex flex-row"
+      >
+        {session ? (
+          <Link href="/api/auth/signout">Sign Out</Link>
+        ) : (
+          <Link href="/api/auth/signin">Sign In</Link>
+        )}
+        <div className="px-8">
+          <Link href="mybooking">My Booking</Link>
         </div>
-    )
+      </div>
+    </div>
+  );
 }

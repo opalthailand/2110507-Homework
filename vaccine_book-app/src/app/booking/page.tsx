@@ -2,10 +2,7 @@ import LocationDateReserve from "@/components/LocationDateReserve"
 import getUserProfile from "@/libs/getUserProfile"
 import { getServerSession } from "next-auth"
 import { authOptions } from "../api/auth/[...nextauth]/route"
-
-
 export default async function Booking() {
-
     const session = await getServerSession(authOptions);
     if (!session || !session.user.token) return null
     const profile = await getUserProfile(session.user.token)
