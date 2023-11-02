@@ -15,7 +15,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-export default function BookingForm() {
+export default function LocationDateReserve() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [idCard, setIdCard] = useState("");
